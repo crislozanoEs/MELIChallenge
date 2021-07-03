@@ -1,0 +1,18 @@
+<resources>
+  <string name="app_name">ChallengeMELI</string>
+
+  <!--HomeScreen-->
+  <string name="search_edit_text_title">Busca productos, marcas y más </string>
+  <string name="search_button_title">Buscar</string>
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="productImageDescription">ProductImage</string>
+
+  <!--ProductListScreen-->
+  <string name="product_list_error_empty_search">Hubo un problema de nuestro lado, vuelve a iniciar la busqueda</string>
+  <string name="product_list_error_empty_result">No se encontraron resultados a tu busqueda</string>
+  <string name="product_list_title">Presentando resultados de: </string>
+
+  <!--ProductDetailScreen-->
+  <string name="product_detail_error_empty_id">Hubo un problema de nuestro lado</string>
+
+</resources>

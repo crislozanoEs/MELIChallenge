@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".home.view.HomeFragment"
+  >
+
+    <TextView
+      android:id="@+id/textViewSearchTitle"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:text="@string/search_edit_text_title"
+      app:layout_constraintBottom_toTopOf="@id/editTextSearch"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_chainStyle="packed"
+      android:layout_marginStart="15dp"
+      android:layout_marginEnd="15dp"
+      android:labelFor="@id/editTextSearch"
+      />
+
+    <EditText
+      android:id="@+id/editTextSearch"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/textViewSearchTitle"
+      android:layout_marginStart="15dp"
+      android:layout_marginEnd="15dp"
+      android:layout_marginTop="5dp"
+      android:autofillHints="@string/search_edit_text_title"
+      android:inputType="text"
+      />
+    <Button
+      android:id="@+id/buttonSearch"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/editTextSearch"
+      android:layout_marginTop="5dp"
+      android:layout_marginEnd="15dp"
+      android:text="@string/search_button_title"
+      />
+</androidx.constraintlayout.widget.ConstraintLayout>
