@@ -3,6 +3,8 @@ package com.crisav2.challengemeli.common
 import android.content.Context
 
 class MessageManager(val context: Context): IMessageManager {
+    override val titleTryAgainProductDetail: String
+        get() = getMessage(Message.PRODUCT_DETAIL_TRY_AGAIN_BUTTON_TEXT)
 
     override val errorEmptyProductID: String
         get() = getMessage(Message.PRODUCT_DETAIL_ERROR_EMPTY_ID)

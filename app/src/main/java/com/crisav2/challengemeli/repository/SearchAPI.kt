@@ -6,6 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface SearchAPI{
-    @GET("search/")
+    @GET("sites/MCO/search/")
     fun getProducts(@Query("q")keyword: String): Single<SearchResultNetwork>
 }

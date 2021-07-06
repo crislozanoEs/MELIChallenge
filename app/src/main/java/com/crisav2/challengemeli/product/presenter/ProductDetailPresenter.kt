@@ -7,6 +7,7 @@ import com.crisav2.challengemeli.repository.model.asProduct
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import android.util.Log
 
 class ProductDetailPresenter(
     val view: ProductDetail.View,
@@ -23,15 +24,19 @@ class ProductDetailPresenter(
             this.productID = productID
             startLoadingProduct()
         }?: run{
-            view.showError(messageManager.errorEmptyProductID)
+            view.setErrorView(messageManager.errorEmptyProductID, false)
             view.showLoading(false)
         }
-
+        view.setUpTryAgainButtonTitle(messageManager.titleTryAgainProductDetail)
     }
 
     override fun destroy() {
         disposables.dispose()
         disposables.clear()
+    }
+
+    override fun tryDetailAgain() {
+        startLoadingProduct()
     }
 
     private fun startLoadingProduct() {
@@ -44,11 +49,13 @@ class ProductDetailPresenter(
                 .subscribe({ result ->
                     val product = result.asProduct()
                     view.setProductInView(product)
-                },{
-                    view.showError(it.localizedMessage)
+                },{ error ->
+                    view.setErrorView(
+                        error.localizedMessage ?: messageManager.errorEmptyProductID,
+                        true)
                 })
             disposables.add(productDisposable)
-        }
+        }?: view.setErrorView(messageManager.errorEmptyProductID, false)
     }
 
 

@@ -9,5 +9,6 @@ data class Product (
     val price: String = "",
     val availableQuantity: Int = 0,
     val soldQuantity: Int = 0,
-    val thumbnail: String = ""
+    val thumbnail: String = "",
+    val secureThumbnail: String = ""
 )

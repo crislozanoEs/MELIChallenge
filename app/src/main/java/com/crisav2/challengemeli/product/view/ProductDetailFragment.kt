@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -30,6 +31,9 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
   private lateinit var textViewError: TextView
   private lateinit var progressBar: ProgressBar
   private lateinit var imageViewProductImage: ImageView
+  private lateinit var buttonTryAgain: Button
+
+  private var onClickTryAgain: View.OnClickListener? = null
 
   @Inject
   lateinit var presenter: ProductDetail.Presenter
@@ -57,10 +61,14 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
   }
 
   private fun setUpView(root: View) {
-    textViewProductTitle = root.findViewById(R.id.textViewProductTitle)
-    imageViewProductImage = root.findViewById(R.id.imageViewProductImage)
+    textViewProductTitle = root.findViewById(R.id.textViewProductDetailTitle)
+    imageViewProductImage = root.findViewById(R.id.imageViewProductDetailImage)
     progressBar = root.findViewById(R.id.progressBarProductDetail)
     textViewError = root.findViewById(R.id.textViewErrorProductDetail)
+    buttonTryAgain = root.findViewById(R.id.buttonProductDetailTryAgain)
+    onClickTryAgain = View.OnClickListener {
+      presenter.tryDetailAgain()
+    }
 
   }
 
@@ -80,19 +88,39 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
   }
 
   override fun showLoading(isShowing: Boolean) {
-    showProduct(isShowing)
     if(isShowing){
       progressBar.visibility = View.VISIBLE
-      textViewError.visibility = View.GONE
     }else{
       progressBar.visibility = View.GONE
     }
   }
 
-  override fun showError(error: String) {
+  override fun setErrorView(error: String, withButton: Boolean) {
     showProduct(false)
-    textViewError.visibility = View.VISIBLE
+    showError(true, withButton)
     textViewError.text = error
+  }
+
+  private fun showError(isShowing: Boolean, withButton: Boolean) {
+    val visibility = if(isShowing){
+      View.VISIBLE
+    }else{
+      View.GONE
+    }
+    val visibilityButton = if(withButton){
+      View.VISIBLE
+    }else{
+      View.GONE
+    }
+    val listenerButton = if(withButton){
+      onClickTryAgain
+    }else{
+      null
+    }
+    textViewError.visibility = visibility
+    buttonTryAgain.visibility = visibilityButton
+    buttonTryAgain.isEnabled = withButton
+    buttonTryAgain.setOnClickListener(listenerButton)
   }
 
   private fun showProduct(isShowing: Boolean){
@@ -107,10 +135,17 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
 
   override fun setProductInView(product: Product) {
     showProduct(true)
+    showError(
+      isShowing = false,
+      withButton = false)
     textViewProductTitle.text = product.titles
     Glide.with(context)
-      .load(product.thumbnail)
+      .load(product.secureThumbnail)
       .into(imageViewProductImage)
 
+  }
+
+  override fun setUpTryAgainButtonTitle(titleTryAgainProductDetail: String) {
+    buttonTryAgain.text = titleTryAgainProductDetail
   }
 }

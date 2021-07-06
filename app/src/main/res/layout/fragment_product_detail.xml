@@ -7,7 +7,7 @@
     tools:context=".product.view.ProductDetailFragment">
   
   <TextView
-      android:id="@+id/textViewProductTitle"
+      android:id="@+id/textViewProductDetailTitle"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       app:layout_constraintTop_toTopOf="parent"
@@ -16,14 +16,14 @@
       android:layout_marginTop="25dp"/>
   
   <ImageView
-      android:id="@+id/imageViewProductImage"
+      android:id="@+id/imageViewProductDetailImage"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      app:layout_constraintTop_toTopOf="@id/textViewProductTitle"
+      app:layout_constraintTop_toTopOf="@id/textViewProductDetailTitle"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       android:layout_marginTop="50dp"
-      />
+      android:contentDescription="@string/imagedetail" />
 
   <ProgressBar
       android:id="@+id/progressBarProductDetail"
@@ -41,7 +41,14 @@
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      android:text="ERROR!!!" />
+      app:layout_constraintEnd_toEndOf="parent" />
+
+  <Button
+      android:id="@+id/buttonProductDetailTryAgain"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toBottomOf="@id/textViewErrorProductDetail"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
   
 </androidx.constraintlayout.widget.ConstraintLayout>
