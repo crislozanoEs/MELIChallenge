@@ -7,6 +7,8 @@ import com.crisav2.challengemeli.common.IMessageManager
 import com.crisav2.challengemeli.common.MessageManager
 import com.crisav2.challengemeli.repository.ProductAPI
 import com.crisav2.challengemeli.repository.SearchAPI
+import com.crisav2.core.usecase.Transformation
+import com.crisav2.core.usecase.Validators
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -43,4 +45,10 @@ class ApplicationModule(private val application: Application) {
     @Provides
     @Singleton
     fun provideProductApi(): ProductAPI = createRetrofit().create(ProductAPI::class.java)
+
+    @Provides
+    fun provideValidators(): Validators = Validators()
+
+    @Provides
+    fun provideTransformation(): Transformation = Transformation()
 }

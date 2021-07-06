@@ -106,7 +106,7 @@ class ProductListFragment : Fragment(), ProductList.View {
     override fun showList(productList: List<Product>) {
         errorTextView.visibility = View.GONE
         listView.visibility = View.VISIBLE
-        val adapter = ProductAdapter{id -> presenter.validateIdAndNavigate(id)}
+        val adapter = ProductAdapter({id -> presenter.validateIdAndNavigate(id)}, presenter.messageManager)
         adapter.productList = productList
         listView.adapter = adapter
     }

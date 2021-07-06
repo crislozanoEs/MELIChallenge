@@ -42,7 +42,7 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
     super.onCreate(savedInstanceState)
     arguments?.let {
       productId = it.getString(ARG_PARAM_1)
-      Log.e("DDCris","productID $productId")
+
     }
     inject()
   }
@@ -69,6 +69,10 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
     onClickTryAgain = View.OnClickListener {
       presenter.tryDetailAgain()
     }
+    showError(
+      isShowing = false,
+      withButton = false)
+    showProduct(false)
 
   }
 
@@ -141,6 +145,8 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
     textViewProductTitle.text = product.titles
     Glide.with(context)
       .load(product.secureThumbnail)
+      .fallback(R.drawable.ic_default_image)
+      .error(R.drawable.ic_default_image)
       .into(imageViewProductImage)
 
   }

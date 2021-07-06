@@ -11,6 +11,8 @@
   <string name="product_list_error_empty_search">Hubo un problema de nuestro lado, vuelve a iniciar la busqueda</string>
   <string name="product_list_error_empty_result">No se encontraron resultados a tu busqueda</string>
   <string name="product_list_title">Presentando resultados de: </string>
+  <!---itemProduct-->
+  <string name="product_quantity">Disponible: </string>
 
   <!--ProductDetailScreen-->
   <string name="product_detail_error_empty_id">Hubo un problema de nuestro lado</string>

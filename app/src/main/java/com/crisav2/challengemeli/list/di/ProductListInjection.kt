@@ -7,6 +7,7 @@ import com.crisav2.challengemeli.list.ProductList
 import com.crisav2.challengemeli.list.presenter.ProductListPresenter
 import com.crisav2.challengemeli.list.view.ProductListFragment
 import com.crisav2.challengemeli.repository.SearchAPI
+import com.crisav2.core.usecase.Transformation
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -24,8 +25,8 @@ class ProductListModule(private val view: ProductList.View){
     @Provides
     @FragmentScope
     fun providePresenter(
-        context: Context,
         messageManager: IMessageManager,
-        searchAPI: SearchAPI
-    ): ProductList.Presenter = ProductListPresenter(context, view, messageManager, searchAPI)
+        searchAPI: SearchAPI,
+        transformation: Transformation
+    ): ProductList.Presenter = ProductListPresenter(view, messageManager, searchAPI, transformation)
 }

@@ -23,28 +23,25 @@
         app:layout_constraintTop_toBottomOf="@id/textViewProductTitle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="10dp"
         android:contentDescription="@string/productImageDescription" />
 
     <TextView
         android:id="@+id/textViewProductPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/imageProduct"
-        app:layout_constraintTop_toTopOf="@+id/imageProduct"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageProduct"
+        android:layout_marginTop="5dp"
         android:text="$15.000"
         />
 
     <TextView
-        android:id="@+id/textViewProductSupplier"
+        android:id="@+id/textViewProductQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/imageProduct"
-        app:layout_constraintBottom_toBottomOf="@+id/imageProduct"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageProduct"
+        android:layout_marginTop="5dp"
         android:text="Sold by My"
         />
 

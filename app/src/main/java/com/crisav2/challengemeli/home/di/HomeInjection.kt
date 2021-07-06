@@ -7,6 +7,7 @@ import com.crisav2.challengemeli.di.FragmentScope
 import com.crisav2.challengemeli.home.Home
 import com.crisav2.challengemeli.home.presenter.HomePresenter
 import com.crisav2.challengemeli.home.view.HomeFragment
+import com.crisav2.core.usecase.Validators
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -25,7 +26,7 @@ class HomeModule(private val view: Home.View){
     @Provides
     @FragmentScope
     fun provideHomePresenter(
-        context: Context,
-        messageManager: IMessageManager
-    ): Home.Presenter = HomePresenter(context, view, messageManager)
+        messageManager: IMessageManager,
+        validators: Validators
+    ): Home.Presenter = HomePresenter(view, messageManager, validators)
 }

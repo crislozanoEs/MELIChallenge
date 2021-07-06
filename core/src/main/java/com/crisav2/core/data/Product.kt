@@ -9,6 +9,7 @@ data class Product (
     val price: String = "",
     val availableQuantity: Int = 0,
     val soldQuantity: Int = 0,
-    val thumbnail: String = "",
-    val secureThumbnail: String = ""
+    var thumbnail: String = "",
+    var secureThumbnail: String = "",
+    val quantity: Int = 0
 )

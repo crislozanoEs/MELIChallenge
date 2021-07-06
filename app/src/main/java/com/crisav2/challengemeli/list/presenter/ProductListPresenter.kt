@@ -11,12 +11,13 @@ import android.util.Log
 import com.crisav2.challengemeli.repository.SearchAPI
 import com.crisav2.challengemeli.repository.model.asSearchResult
 import com.crisav2.core.data.Product
+import com.crisav2.core.usecase.Transformation
 
 class ProductListPresenter(
-    context: Context,
     private val view: ProductList.View,
-    private val messageManager: IMessageManager,
-    private val searchAPI: SearchAPI
+    override val messageManager: IMessageManager,
+    private val searchAPI: SearchAPI,
+    private val transformation: Transformation
 ): ProductList.Presenter {
 
     private var keyword: String = ""
@@ -54,7 +55,10 @@ class ProductListPresenter(
                 val resultModel = it.asSearchResult()
                 view.showLoading(false)
                 when(resultModel.results?.isNotEmpty()){
-                    true -> view.showList(resultModel.results!!)
+                    true -> {
+                        validateThumbnailURL(resultModel.results!!)
+                        view.showList(resultModel.results!!)
+                    }
                     false-> view.showError(messageManager.errorEmptyResults)
                 }
             },{
@@ -64,11 +68,17 @@ class ProductListPresenter(
         disposables.add(searchDisposable)
     }
 
+    private fun validateThumbnailURL(results: List<Product>) {
+        results.forEach {
+            if(it.secureThumbnail.isEmpty()){
+                it.secureThumbnail = transformation.validateSecureURLAndTransform(it.thumbnail)
+            }
+        }
+    }
+
     private fun startSearch() {
         view.showLoading(true)
-        val builder = StringBuilder(messageManager.titleProductListScreen)
-        builder.append(keyword)
-        view.setTitle(builder.toString())
+        view.setTitle("${messageManager.titleProductListScreen} $keyword")
         loadProducts()
     }
 

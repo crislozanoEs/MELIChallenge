@@ -1,17 +1,17 @@
 package com.crisav2.challengemeli.home.presenter
 
-import android.content.Context
 import com.crisav2.challengemeli.common.IMessageManager
 import com.crisav2.challengemeli.home.Home
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import android.util.Log
+import com.crisav2.core.usecase.Validators
 
 class HomePresenter (
-    context: Context,
     private val view: Home.View,
-    private val messageManager: IMessageManager
+    private val messageManager: IMessageManager,
+    private val validators: Validators
 ): Home.Presenter {
 
     private var currentUserInput: String = ""
@@ -41,11 +41,9 @@ class HomePresenter (
             .subscribe (
                 {
                   currentUserInput = it
-                  val isValidInput = currentUserInput.isNotEmpty()
+                  val isValidInput = validators.validateKeyword(currentUserInput)
                   view.enableSearchButton(isValidInput)
-                },{
-
-                })
+                },{})
         disposables.add(changeInputDisposable)
     }
 

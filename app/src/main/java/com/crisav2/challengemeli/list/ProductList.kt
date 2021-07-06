@@ -1,5 +1,7 @@
 package com.crisav2.challengemeli.list
 
+import com.crisav2.challengemeli.common.IMessageManager
+import com.crisav2.challengemeli.common.MessageManager
 import com.crisav2.core.data.Product
 
 interface ProductList {
@@ -13,6 +15,7 @@ interface ProductList {
     }
 
     interface Presenter{
+        val messageManager: IMessageManager
         fun initialize(keyword: String)
         fun evaluateKeyword()
         fun destroy()
