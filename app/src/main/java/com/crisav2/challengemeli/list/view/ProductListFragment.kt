@@ -18,18 +18,26 @@ import com.crisav2.core.data.Product
 import javax.inject.Inject
 
 private const val ARG_PARAM_1 = "param.1.keyword"
+
+/**
+ * ProductListFragment - View
+ *
+ * Fragmento que presenta la lista de los productos que el usuario buscó.
+ * Presenter: ProductList.Presenter
+ */
 class ProductListFragment : Fragment(), ProductList.View {
 
     lateinit var listView: RecyclerView
     lateinit var progressBar: ProgressBar
     lateinit var errorTextView: TextView
     lateinit var titleTextView: TextView
-
     @Inject
     lateinit var presenter: ProductList.Presenter
 
+    // Representa la palabra clave que el usuario digito.
     private var keyword: String? = null
 
+    // Lifecycle methods section
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -38,17 +46,8 @@ class ProductListFragment : Fragment(), ProductList.View {
         inject()
     }
 
-    private fun inject() {
-        applicationComponent
-            .plus(ProductListModule((this)))
-            .inject(this)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        keyword?.let {
-            presenter.initialize(it)
-            keyword = null
-        }?: presenter.evaluateKeyword()
+        presenter.initialize(keyword)
     }
 
     override fun onCreateView(
@@ -65,23 +64,7 @@ class ProductListFragment : Fragment(), ProductList.View {
         presenter.destroy()
     }
 
-    private fun setUpView(root: View) {
-        listView = root.findViewById(R.id.listViewProductList)
-        progressBar = root.findViewById(R.id.progressBarProductList)
-        errorTextView = root.findViewById(R.id.textViewErrorSearch)
-        titleTextView = root.findViewById(R.id.textViewTitleProductList)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(keyword: String) =
-            ProductListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM_1, keyword)
-                }
-            }
-    }
-
+    // Public methods section
     override fun showError(error: String) {
         listView.visibility = View.GONE
         errorTextView.visibility = View.VISIBLE
@@ -106,12 +89,35 @@ class ProductListFragment : Fragment(), ProductList.View {
     override fun showList(productList: List<Product>) {
         errorTextView.visibility = View.GONE
         listView.visibility = View.VISIBLE
-        val adapter = ProductAdapter({id -> presenter.validateIdAndNavigate(id)}, presenter.messageManager)
+        val adapter = ProductAdapter({id -> presenter.validateIdAndNavigate(id)}, presenter.messageManager, presenter.transformation)
         adapter.productList = productList
         listView.adapter = adapter
     }
 
     override fun goToProductDetail(id: String) {
         (activity as MainActivity).goToProductDetail(id)
+    }
+    private fun inject() {
+        applicationComponent
+            .plus(ProductListModule((this)))
+            .inject(this)
+    }
+
+    // Private methods section
+    private fun setUpView(root: View) {
+        listView = root.findViewById(R.id.listViewProductList)
+        progressBar = root.findViewById(R.id.progressBarProductList)
+        errorTextView = root.findViewById(R.id.textViewErrorSearch)
+        titleTextView = root.findViewById(R.id.textViewTitleProductList)
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(keyword: String) =
+            ProductListFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM_1, keyword)
+                }
+            }
     }
 }

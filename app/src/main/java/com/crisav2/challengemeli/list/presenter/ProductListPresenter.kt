@@ -1,38 +1,40 @@
 package com.crisav2.challengemeli.list.presenter
 
-import android.content.Context
 import com.crisav2.challengemeli.common.IMessageManager
 import com.crisav2.challengemeli.list.ProductList
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import java.lang.StringBuilder
-import android.util.Log
 import com.crisav2.challengemeli.repository.SearchAPI
 import com.crisav2.challengemeli.repository.model.asSearchResult
 import com.crisav2.core.data.Product
 import com.crisav2.core.usecase.Transformation
+import io.reactivex.Scheduler
+
+/**
+ * ProductListPresenter - Presenter
+ *
+ * Presenter que presenta la lista de los productos que el usuario buscó.
+ * View: ProductList.View
+ */
 
 class ProductListPresenter(
     private val view: ProductList.View,
     override val messageManager: IMessageManager,
     private val searchAPI: SearchAPI,
-    private val transformation: Transformation
+    override val transformation: Transformation,
+    private val subscribeOn: Scheduler,
+    private val observeOn: Scheduler
 ): ProductList.Presenter {
 
     private var keyword: String = ""
     private var disposables = CompositeDisposable()
 
-    override fun initialize(keyword: String) {
-        this.keyword = keyword
-        startSearch()
-    }
-
-    override fun evaluateKeyword() {
-        if(keyword.isEmpty()){
-            showError()
-        }else{
+    // Public methods section
+    override fun initialize(keyword: String?) {
+        keyword?.let {
+            this.keyword = it
             startSearch()
+        }?: run{
+            showError()
         }
     }
 
@@ -47,13 +49,14 @@ class ProductListPresenter(
         }
     }
 
+    // Private methods section
     private fun loadProducts() {
         val searchDisposable = searchAPI.getProducts(keyword)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(subscribeOn)
+            .observeOn(observeOn)
+            .doFinally{ view.showLoading(false)}
             .subscribe({
                 val resultModel = it.asSearchResult()
-                view.showLoading(false)
                 when(resultModel.results?.isNotEmpty()){
                     true -> {
                         validateThumbnailURL(resultModel.results!!)
@@ -62,8 +65,7 @@ class ProductListPresenter(
                     false-> view.showError(messageManager.errorEmptyResults)
                 }
             },{
-                view.showLoading(false)
-                view.showError(it.localizedMessage)
+                view.showError(it.localizedMessage ?: messageManager.errorEmptySearch)
             })
         disposables.add(searchDisposable)
     }
@@ -83,8 +85,7 @@ class ProductListPresenter(
     }
 
     private fun showError() {
+        view.showLoading(false)
         view.showError(messageManager.errorEmptySearch)
     }
-
-
 }

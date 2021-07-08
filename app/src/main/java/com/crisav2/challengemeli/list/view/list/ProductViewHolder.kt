@@ -1,6 +1,5 @@
 package com.crisav2.challengemeli.list.view.list
 
-import android.provider.ContactsContract.Intents.Insert.DATA
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,14 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.crisav2.challengemeli.R
 import com.crisav2.core.data.Product
-import android.util.Log
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.crisav2.challengemeli.common.IMessageManager
-import com.crisav2.challengemeli.common.MessageManager
+import com.crisav2.core.usecase.Transformation
 
 class ProductViewHolder(
     itemView: View,
-    val messageManager: IMessageManager
+    val messageManager: IMessageManager,
+    val transformation: Transformation
 ): RecyclerView.ViewHolder(itemView){
 
     private val requestImage = Glide.with(itemView.context)
@@ -28,7 +27,7 @@ class ProductViewHolder(
 
     fun setUpProduct(product: Product){
         textViewProductTitle.text = product.titles
-        textViewProductPrice.text = product.price
+        textViewProductPrice.text = transformation.getPrettyPrice(product.price)
         textViewProductQuantity.text = "${messageManager.titleProductQuantity} ${product.availableQuantity}"
         requestImage
             .load(product.secureThumbnail)

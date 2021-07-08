@@ -11,6 +11,8 @@ import com.crisav2.core.usecase.Validators
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 
 @FragmentScope
@@ -28,5 +30,11 @@ class HomeModule(private val view: Home.View){
     fun provideHomePresenter(
         messageManager: IMessageManager,
         validators: Validators
-    ): Home.Presenter = HomePresenter(view, messageManager, validators)
+    ): Home.Presenter = HomePresenter(
+        view,
+        messageManager,
+        validators,
+        Schedulers.io(),
+        AndroidSchedulers.mainThread()
+    )
 }

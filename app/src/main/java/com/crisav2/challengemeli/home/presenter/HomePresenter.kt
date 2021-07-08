@@ -7,11 +7,15 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import android.util.Log
 import com.crisav2.core.usecase.Validators
+import io.reactivex.Scheduler
+import io.reactivex.subjects.PublishSubject
 
 class HomePresenter (
     private val view: Home.View,
     private val messageManager: IMessageManager,
-    private val validators: Validators
+    private val validators: Validators,
+    private val subscribeOn: Scheduler,
+    private val observeOn: Scheduler
 ): Home.Presenter {
 
     private var currentUserInput: String = ""
@@ -20,7 +24,7 @@ class HomePresenter (
 
     override fun initialize() {
         loadView()
-        initDisposables()
+        view.initListeners()
     }
 
     override fun clear() {
@@ -34,10 +38,10 @@ class HomePresenter (
     }
   }
 
-  private fun initDisposables() {
-        val changeInputDisposable = view.inputSubject
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+  override fun initDisposables(inputSubject: PublishSubject<String>) {
+        val changeInputDisposable = inputSubject
+            .subscribeOn(subscribeOn)
+            .observeOn(observeOn)
             .subscribe (
                 {
                   currentUserInput = it
@@ -52,6 +56,4 @@ class HomePresenter (
       view.setButtonTitle(messageManager.searchButtonTitle)
       view.enableSearchButton(currentUserInput.isNotEmpty())
     }
-
-
 }

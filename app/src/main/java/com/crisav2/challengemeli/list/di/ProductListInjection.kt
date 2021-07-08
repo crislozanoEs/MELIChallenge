@@ -11,6 +11,8 @@ import com.crisav2.core.usecase.Transformation
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 
 @FragmentScope
@@ -28,5 +30,12 @@ class ProductListModule(private val view: ProductList.View){
         messageManager: IMessageManager,
         searchAPI: SearchAPI,
         transformation: Transformation
-    ): ProductList.Presenter = ProductListPresenter(view, messageManager, searchAPI, transformation)
+    ): ProductList.Presenter = ProductListPresenter(
+        view,
+        messageManager,
+        searchAPI,
+        transformation,
+        Schedulers.io(),
+        AndroidSchedulers.mainThread()
+    )
 }

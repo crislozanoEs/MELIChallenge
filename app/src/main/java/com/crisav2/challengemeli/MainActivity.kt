@@ -4,16 +4,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
+import com.crisav2.challengemeli.common.Constants
 import com.crisav2.challengemeli.home.view.HomeFragment
 import com.crisav2.challengemeli.list.view.ProductListFragment
-import com.crisav2.challengemeli.product.ProductDetail
 import com.crisav2.challengemeli.product.view.ProductDetailFragment
 
 class MainActivity : AppCompatActivity() {
+
+  private var currentFragment: Fragment? = null
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    replaceFragment(HomeFragment.newInstance(), "HOME_FRAGMENT")
+    savedInstanceState?.let{
+      currentFragment = supportFragmentManager.getFragment(savedInstanceState, Constants.currentFragmentTag)
+    }?: run{
+      replaceFragment(HomeFragment.newInstance(), Constants.homeFragmentTag)
+    }
   }
 
   private fun replaceFragment(fragment: Fragment, tag: String) {
@@ -24,11 +31,19 @@ class MainActivity : AppCompatActivity() {
   }
 
   fun goToList(keyword: String){
-    actionBar?.setDisplayHomeAsUpEnabled(true)
-    replaceFragment(ProductListFragment.newInstance(keyword),"LIST_FRAGMENT")
+    replaceFragment(ProductListFragment.newInstance(keyword),Constants.listFragmentTag)
   }
 
   fun goToProductDetail(id: String) {
-    replaceFragment(ProductDetailFragment.newInstance(id),"PRODUCT_DETAIL_FRAGMENT")
+    replaceFragment(ProductDetailFragment.newInstance(id),Constants.productFragmentTag)
   }
+
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    currentFragment?.let{
+      supportFragmentManager.putFragment(outState,Constants.currentFragmentTag, it)
+    }
+  }
+
+
 }

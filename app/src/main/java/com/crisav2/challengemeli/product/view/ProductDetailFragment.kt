@@ -1,8 +1,6 @@
 package com.crisav2.challengemeli.product.view
 
-import android.media.Image
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,17 +9,23 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.constraintlayout.solver.PriorityGoalRow
 import com.bumptech.glide.Glide
 import com.crisav2.challengemeli.R
 import com.crisav2.challengemeli.common.applicationComponent
-import com.crisav2.challengemeli.list.di.ProductListModule
 import com.crisav2.challengemeli.product.ProductDetail
 import com.crisav2.challengemeli.product.di.ProductDetailModule
 import com.crisav2.core.data.Product
 import javax.inject.Inject
 
 private const val ARG_PARAM_1 = "param.1.product.id"
+
+/**
+ * ProductDetailFragment - View
+ *
+ * Fragmento que representa el detalle de un producto.
+ * Presenter: ProductDetail.Presenter
+ */
+
 
 class ProductDetailFragment : Fragment(), ProductDetail.View {
 
@@ -38,6 +42,7 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
   @Inject
   lateinit var presenter: ProductDetail.Presenter
 
+  // Lifecycle methods section
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     arguments?.let {
@@ -47,33 +52,11 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
     inject()
   }
 
-  private fun inject() {
-    applicationComponent
-      .plus(ProductDetailModule((this)))
-      .inject(this)
-  }
-
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-    savedInstanceState: Bundle?): View? {
+                            savedInstanceState: Bundle?): View? {
     val root = inflater.inflate(R.layout.fragment_product_detail, container, false)
     setUpView(root)
     return root
-  }
-
-  private fun setUpView(root: View) {
-    textViewProductTitle = root.findViewById(R.id.textViewProductDetailTitle)
-    imageViewProductImage = root.findViewById(R.id.imageViewProductDetailImage)
-    progressBar = root.findViewById(R.id.progressBarProductDetail)
-    textViewError = root.findViewById(R.id.textViewErrorProductDetail)
-    buttonTryAgain = root.findViewById(R.id.buttonProductDetailTryAgain)
-    onClickTryAgain = View.OnClickListener {
-      presenter.tryDetailAgain()
-    }
-    showError(
-      isShowing = false,
-      withButton = false)
-    showProduct(false)
-
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,14 +64,27 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
     presenter.initialize(productId)
   }
 
-  companion object {
-    @JvmStatic
-    fun newInstance(productId: String) =
-      ProductDetailFragment().apply {
-        arguments = Bundle().apply {
-          putString(ARG_PARAM_1, productId)
-        }
-      }
+  override fun onDestroy() {
+    super.onDestroy()
+    presenter.destroy()
+  }
+
+  // Public methods section
+  override fun setProductInView(product: Product) {
+    showProduct(true)
+    showError(
+      isShowing = false,
+      withButton = false)
+    textViewProductTitle.text = product.titles
+    Glide.with(context)
+      .load(product.secureThumbnail)
+      .fallback(R.drawable.ic_default_image)
+      .error(R.drawable.ic_default_image)
+      .into(imageViewProductImage)
+  }
+
+  override fun setUpTryAgainButtonTitle(titleTryAgainProductDetail: String) {
+    buttonTryAgain.text = titleTryAgainProductDetail
   }
 
   override fun showLoading(isShowing: Boolean) {
@@ -103,6 +99,22 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
     showProduct(false)
     showError(true, withButton)
     textViewError.text = error
+  }
+
+  // Private methods section
+  private fun setUpView(root: View) {
+    textViewProductTitle = root.findViewById(R.id.textViewProductDetailTitle)
+    imageViewProductImage = root.findViewById(R.id.imageViewProductDetailImage)
+    progressBar = root.findViewById(R.id.progressBarProductDetail)
+    textViewError = root.findViewById(R.id.textViewErrorProductDetail)
+    buttonTryAgain = root.findViewById(R.id.buttonProductDetailTryAgain)
+    onClickTryAgain = View.OnClickListener {
+      presenter.tryDetailAgain()
+    }
+    showError(
+      isShowing = false,
+      withButton = false)
+    showProduct(false)
   }
 
   private fun showError(isShowing: Boolean, withButton: Boolean) {
@@ -137,21 +149,19 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
     imageViewProductImage.visibility = visibility
   }
 
-  override fun setProductInView(product: Product) {
-    showProduct(true)
-    showError(
-      isShowing = false,
-      withButton = false)
-    textViewProductTitle.text = product.titles
-    Glide.with(context)
-      .load(product.secureThumbnail)
-      .fallback(R.drawable.ic_default_image)
-      .error(R.drawable.ic_default_image)
-      .into(imageViewProductImage)
-
+  private fun inject() {
+    applicationComponent
+      .plus(ProductDetailModule((this)))
+      .inject(this)
   }
 
-  override fun setUpTryAgainButtonTitle(titleTryAgainProductDetail: String) {
-    buttonTryAgain.text = titleTryAgainProductDetail
+  companion object {
+    @JvmStatic
+    fun newInstance(productId: String) =
+      ProductDetailFragment().apply {
+        arguments = Bundle().apply {
+          putString(ARG_PARAM_1, productId)
+        }
+      }
   }
 }

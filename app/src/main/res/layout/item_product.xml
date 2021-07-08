@@ -7,7 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
-    android:layout_marginTop="20dp">
+    android:layout_marginTop="20dp"
+    android:background="@drawable/layout_border">
     <TextView
         android:id="@+id/textViewProductTitle"
         android:layout_width="0dp"
@@ -15,15 +16,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         />
     <ImageView
         android:id="@+id/imageProduct"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/textViewProductTitle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/productImageDescription" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/productImageDescription"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
 
     <TextView
         android:id="@+id/textViewProductPrice"
@@ -32,7 +39,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageProduct"
         android:layout_marginTop="5dp"
-        android:text="$15.000"
+        android:layout_marginStart="5dp"
         />
 
     <TextView
@@ -42,7 +49,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageProduct"
         android:layout_marginTop="5dp"
-        android:text="Sold by My"
+        android:layout_marginEnd="5dp"
         />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
