@@ -10,5 +10,6 @@ data class Product (
     val soldQuantity: Int = 0,
     var thumbnail: String = "",
     var secureThumbnail: String = "",
-    val quantity: Int = 0
+    val quantity: Int = 0,
+    val condition: String = ""
 )

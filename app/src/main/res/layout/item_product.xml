@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:id="@+id/completeLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    android:layout_marginTop="20dp"
+    android:layout_marginStart="@dimen/start_margin_item_product"
+    android:layout_marginEnd="@dimen/end_margin_item_product"
+    android:layout_marginTop="@dimen/top_margin_item_product"
     android:background="@drawable/layout_border">
     <TextView
         android:id="@+id/textViewProductTitle"
@@ -19,6 +19,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
+        style="@style/itemsProduct"
         />
     <ImageView
         android:id="@+id/imageProduct"
@@ -40,6 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageProduct"
         android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"
+        style="@style/itemsProduct"
         />
 
     <TextView
@@ -50,5 +52,6 @@
         app:layout_constraintTop_toBottomOf="@+id/imageProduct"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
+        style="@style/itemsProduct"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

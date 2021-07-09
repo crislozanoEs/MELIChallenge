@@ -1,6 +1,8 @@
 package com.crisav2.challengemeli.common
 
 interface IMessageManager {
+    val preQuantityPromotion: String
+    val preQuantity: String
     val titleProductQuantity: String
     val titleTryAgainProductDetail: String
     val errorEmptyProductID: String

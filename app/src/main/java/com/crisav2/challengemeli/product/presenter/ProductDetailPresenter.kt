@@ -4,6 +4,7 @@ import com.crisav2.challengemeli.common.IMessageManager
 import com.crisav2.challengemeli.product.ProductDetail
 import com.crisav2.challengemeli.repository.ProductAPI
 import com.crisav2.challengemeli.repository.model.asProduct
+import com.crisav2.core.data.Product
 import com.crisav2.core.usecase.Transformation
 import com.crisav2.core.usecase.Validators
 import io.reactivex.disposables.CompositeDisposable
@@ -67,7 +68,8 @@ class ProductDetailPresenter(
                     val product = result.asProduct()
                     val isProductValid = validators.validateProduct(product)
                     if(isProductValid){
-                        view.setProductInView(product)
+                        view.setProductInView()
+                        prepareProductToView(product)
                     }else{
                         view.setErrorView(messageManager.errorEmptyProductID, true)
                     }
@@ -78,5 +80,27 @@ class ProductDetailPresenter(
                 })
             disposables.add(productDisposable)
         }?: view.setErrorView(messageManager.errorEmptyProductID, false)
+    }
+
+    private fun prepareProductToView(product: Product) {
+        val thumbnail = if(product.secureThumbnail.isEmpty()){
+            transformation.validateSecureURLAndTransform(product.thumbnail)
+        }else{
+            product.secureThumbnail
+        }
+        val stringQuantityPre = if(product.quantity < 3){
+            messageManager.preQuantityPromotion
+        }else{
+            messageManager.preQuantity
+        }
+        val productToView = ProductDetail.ProductInView(
+            product.titles,
+            thumbnail,
+            transformation.getPrettyPrice(product.price),
+            "$stringQuantityPre ${product.availableQuantity}",
+            transformation.getConditionEs(product.condition)
+        )
+        view.setDataInView(productToView)
+
     }
 }

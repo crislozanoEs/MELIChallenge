@@ -24,6 +24,8 @@ data class ProductNetwork (
     val thumbnail: String = "",
     @Json(name = "secure_thumbnail")
     val secureThumbnail: String = "",
+    @Json(name = "condition")
+    val condition: String = ""
 )
 
 fun ProductNetwork.asProduct(): Product{
@@ -36,6 +38,7 @@ fun ProductNetwork.asProduct(): Product{
         availableQuantity = availableQuantity,
         soldQuantity = soldQuantity,
         thumbnail = thumbnail,
-        secureThumbnail = secureThumbnail
+        secureThumbnail = secureThumbnail,
+        condition = condition
     )
 }

@@ -3,6 +3,12 @@ package com.crisav2.challengemeli.common
 import android.content.Context
 
 class MessageManager(val context: Context): IMessageManager {
+    override val preQuantityPromotion: String
+        get() = getMessage(Message.PRODUCT_DETAIL_QUANTITY_PROMOTION)
+
+    override val preQuantity: String
+        get() = getMessage(Message.PRODUCT_DETAIL_QUANTITY)
+
     override val titleProductQuantity: String
         get() = getMessage(Message.PRODUCT_QUANTITY)
 

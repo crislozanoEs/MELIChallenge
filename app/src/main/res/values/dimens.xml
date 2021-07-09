@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="top_margin_item_product">20dp</dimen>
+    <dimen name="end_margin_item_product">10dp</dimen>
+    <dimen name="start_margin_item_product">10dp</dimen>
+
+
+    <dimen name="top_margin_product_list">5dp</dimen>
+    <dimen name="start_margin_product_list">10dp</dimen>
+    <dimen name="end_margin_product_list">10dp</dimen>
+
+
+    <dimen name="top_margin_product_detail">25dp</dimen>
+
+</resources>

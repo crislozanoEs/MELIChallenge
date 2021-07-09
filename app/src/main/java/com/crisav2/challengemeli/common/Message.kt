@@ -14,5 +14,7 @@ enum class Message(val key: String, val id: Int) {
     PRODUCT_QUANTITY("product.quantity",R.string.product_quantity),
     //Product detail screen
     PRODUCT_DETAIL_ERROR_EMPTY_ID("product.detail.error.empty.id",R.string.product_detail_error_empty_id),
-    PRODUCT_DETAIL_TRY_AGAIN_BUTTON_TEXT("product.detail.try.again.button.title",R.string.product_detail_try_again_button)
+    PRODUCT_DETAIL_TRY_AGAIN_BUTTON_TEXT("product.detail.try.again.button.title",R.string.product_detail_try_again_button),
+    PRODUCT_DETAIL_QUANTITY_PROMOTION("product.detail.quantity.promotion",R.string.product_detail_quantity_promotion),
+    PRODUCT_DETAIL_QUANTITY("product.detail.quantity",R.string.product_detail_quantity)
 }

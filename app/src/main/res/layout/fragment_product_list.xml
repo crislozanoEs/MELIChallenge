@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".list.view.ProductListFragment"
-    android:layout_marginTop="5dp"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp">
+    android:layout_marginTop="@dimen/top_margin_product_list"
+    android:layout_marginStart="@dimen/start_margin_product_list"
+    android:layout_marginEnd="@dimen/end_margin_product_list">
 
     <TextView
         android:id="@+id/textViewTitleProductList"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="BUSCARRRRR"
+        style="@style/searchTitleStyle"
         />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listViewProductList"
@@ -44,7 +44,6 @@
         app:layout_constraintTop_toBottomOf="@id/textViewTitleProductList"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="25dp"
-        android:text="ERROR!!!" />
+        android:layout_marginTop="25dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

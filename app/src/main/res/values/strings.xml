@@ -18,5 +18,7 @@
   <string name="product_detail_error_empty_id">Hubo un problema de nuestro lado</string>
   <string name="product_detail_try_again_button">Volver a internar</string>
   <string name="imagedetail">ImageDetail</string>
+    <string name="product_detail_quantity_promotion">Solo quedan</string>
+  <string name="product_detail_quantity">Quedan</string>
 
 </resources>

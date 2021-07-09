@@ -25,7 +25,14 @@ interface ProductDetail {
      * @param product producto seleccionado
      */
 
-    fun setProductInView(product: Product)
+    fun setProductInView()
+
+    /**
+     * Mostrar datos product
+     * @param product producto seleccionado
+     */
+
+    fun setDataInView(product: ProductDetail.ProductInView)
 
     /**
      * Agregar titulo a boton
@@ -57,4 +64,11 @@ interface ProductDetail {
     fun tryDetailAgain()
   }
 
+  data class ProductInView(
+    val title: String,
+    val thumbnail: String,
+    val price: String,
+    val quantity: String,
+    val condition: String
+  )
 }

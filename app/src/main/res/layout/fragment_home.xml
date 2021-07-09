@@ -9,18 +9,19 @@
   >
 
     <TextView
-      android:id="@+id/textViewSearchTitle"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:text="@string/search_edit_text_title"
-      app:layout_constraintBottom_toTopOf="@id/editTextSearch"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_chainStyle="packed"
-      android:layout_marginStart="15dp"
-      android:layout_marginEnd="15dp"
-      android:labelFor="@id/editTextSearch"
+        android:id="@+id/textViewSearchTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/search_edit_text_title"
+        app:layout_constraintBottom_toTopOf="@id/editTextSearch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:labelFor="@id/editTextSearch"
+        style="@style/searchTitleStyle"
       />
 
     <EditText

@@ -14,7 +14,7 @@ open class Transformation {
 
     init{
         format.maximumFractionDigits = 0
-        format.currency = Currency.getInstance(Locale("es","es_CO"))
+        format.currency = Currency.getInstance(Locale("es","CO"))
     }
 
     // Valida si una URL es segura o no. Si no lo es, la vuelve segura http -> https
@@ -31,4 +31,12 @@ open class Transformation {
         val priceInNumber = Integer.parseInt(price)
         return format.format(priceInNumber)
     }
+
+    // Transforma la condicion del producto a español
+    fun getConditionEs(condition: String): String =
+        when(condition){
+            "new" -> "Nuevo"
+            "used" -> "Usado"
+            else -> ""
+        }
 }

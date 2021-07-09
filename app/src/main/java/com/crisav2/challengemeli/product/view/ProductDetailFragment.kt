@@ -32,6 +32,9 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
   private var productId: String? = null
 
   private lateinit var textViewProductTitle: TextView
+  private lateinit var textViewProductPrice: TextView
+  private lateinit var textViewProductQuantity: TextView
+  private lateinit var textViewProductCondition: TextView
   private lateinit var textViewError: TextView
   private lateinit var progressBar: ProgressBar
   private lateinit var imageViewProductImage: ImageView
@@ -70,14 +73,21 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
   }
 
   // Public methods section
-  override fun setProductInView(product: Product) {
+  override fun setProductInView() {
     showProduct(true)
     showError(
       isShowing = false,
       withButton = false)
-    textViewProductTitle.text = product.titles
+  }
+
+  override fun setDataInView(product: ProductDetail.ProductInView){
+    textViewProductTitle.text = product.title
+    textViewProductPrice.text = product.price
+    textViewProductQuantity.text = product.quantity
+    textViewProductCondition.text = product.condition
+
     Glide.with(context)
-      .load(product.secureThumbnail)
+      .load(product.thumbnail)
       .fallback(R.drawable.ic_default_image)
       .error(R.drawable.ic_default_image)
       .into(imageViewProductImage)
@@ -105,6 +115,9 @@ class ProductDetailFragment : Fragment(), ProductDetail.View {
   private fun setUpView(root: View) {
     textViewProductTitle = root.findViewById(R.id.textViewProductDetailTitle)
     imageViewProductImage = root.findViewById(R.id.imageViewProductDetailImage)
+    textViewProductPrice = root.findViewById(R.id.textViewProductDetailPrice)
+    textViewProductQuantity = root.findViewById(R.id.textViewProductDetailQuantity)
+    textViewProductCondition = root.findViewById(R.id.textViewProductDetailType)
     progressBar = root.findViewById(R.id.progressBarProductDetail)
     textViewError = root.findViewById(R.id.textViewErrorProductDetail)
     buttonTryAgain = root.findViewById(R.id.buttonProductDetailTryAgain)
